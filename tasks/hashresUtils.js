@@ -71,14 +71,16 @@ exports.findCommonPath = function(files) {
     filepaths.push(files[x].split(path.sep));
   }
 
-  for (var i = 0; i < filepaths[0].length; i++) {
-    var segment = filepaths[0][i];
-    for (var j = 1; j < files.length; j++) {
-      if (segment !== filepaths[j][i]) { // if we can't find the segment in the next file path, we cannot continue
-        return commonpath.join(path.sep);
+  if (filepaths.length > 0) {
+    for (var i = 0; i < filepaths[0].length; i++) {
+      var segment = filepaths[0][i];
+      for (var j = 1; j < files.length; j++) {
+        if (segment !== filepaths[j][i]) { // if we can't find the segment in the next file path, we cannot continue
+          return commonpath.join(path.sep);
+        }
       }
+      commonpath.push(segment);
     }
-    commonpath.push(segment);
   }
   return commonpath.join(path.sep);
 };
